@@ -4,8 +4,14 @@ function print(...vars){
     console.log(...vars);
 }
 const PORT=process.env.port||3500;
-const publicPath=path.join(__dirname,'..','public');
 const app=express();
+const server=app.listen(PORT,()=>
+{
+    print(`Server is running on port ${PORT}`)
+});
+const publicPath=path.join(__dirname,'..','public');
+const socketIO=require("socket.io");
+const io=socketIO(server);
 app.use(express.static(publicPath));
 
 app.get('/',(req,res)=>{
@@ -17,8 +23,3 @@ app.get('/',(req,res)=>{
 
 
 
-
-app.listen(PORT,()=>
-{
-    print(`Server is running on port ${PORT}`)
-});
